@@ -8,7 +8,6 @@ const categorySlice = createSlice({
   },
   reducers: {
     saveAllCategoryAction: (state, action) => {
-      console.log(action.payload);
       state.allCategory = action.payload;
       state.categoryLoader = true;
     },

@@ -7,6 +7,9 @@ import CategoryService from "../services/CategoryService";
 import { useDispatch, useSelector } from "react-redux";
 import { saveAllCategoryAction } from "../store/categorySlice";
 
+//componenets
+import LoadingComponent from "./LoadingComponent";
+
 function CategoryComponent() {
   const [toggleCategory, setToggleCategory] = useState(false);
 
@@ -28,7 +31,7 @@ function CategoryComponent() {
 
   return (
     <div className=" bg-lightGrayColor p-[10px]">
-      <div className="container mx-auto flex items-center ">
+      <div className="container mx-auto flex items-center flex-col gap-[20px] lg:flex-row ">
         <button
           onClick={handleToggleCategory}
           className="bg-mainYellow text-whiteColor px-[40px] py-[10px] rounded-[15px]"
@@ -37,7 +40,7 @@ function CategoryComponent() {
         </button>
 
         {toggleCategory && (
-          <ul className="flex flex-wrap items-center justify-center gap-[5px]">
+          <ul className="flex flex-wrap items-center justify-center gap-[5px] w-full">
             {categoryLoader ? (
               allCategory.map((cat, index) => {
                 return (
@@ -50,7 +53,9 @@ function CategoryComponent() {
                 );
               })
             ) : (
-              <h2>Loading category.. </h2>
+              <div className="w-full flex items-center justify-center">
+                <LoadingComponent size={30} />
+              </div>
             )}
           </ul>
         )}

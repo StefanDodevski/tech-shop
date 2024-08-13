@@ -7,6 +7,14 @@ import logo from "../assets/logo.png";
 // Icons
 import { CiUser, CiHeart, CiShoppingCart } from "react-icons/ci";
 
+// Clerk
+import {
+  SignedIn,
+  SignedOut,
+  SignInButton,
+  UserButton,
+} from "@clerk/clerk-react";
+
 function NavbarComponent() {
   const [toggleHeader, setToggleHeader] = useState(true);
 
@@ -35,7 +43,12 @@ function NavbarComponent() {
           <div className="flex items-center gap-[15px]">
             <div className="flex items-center">
               <CiUser size={28} color="white" />
-              <span className="text-whiteColor">Login</span>
+              <SignedOut>
+                <SignInButton />
+              </SignedOut>
+              <SignedIn>
+                <UserButton />
+              </SignedIn>
             </div>
             <div className="flex items-center gap-[5px]">
               <CiHeart size={28} color="white" />
