@@ -14,6 +14,7 @@ import {
   SignInButton,
   UserButton,
 } from "@clerk/clerk-react";
+import { Link } from "react-router-dom";
 
 function NavbarComponent() {
   const [toggleHeader, setToggleHeader] = useState(true);
@@ -25,7 +26,9 @@ function NavbarComponent() {
       {/* Main NavBar */}
       <div className="bg-mainBlue h-full py-[10px] lg:h-[100px]">
         <div className="container mx-auto flex items-center justify-between h-full flex-col lg:flex-row gap-[15px]">
-          <img src={logo} alt="logo" />
+          <Link to={"/"}>
+            <img src={logo} alt="logo" />
+          </Link>
 
           {/* Search Bar */}
           <div className="bg-whiteColor rounded-[20px]">
