@@ -15,9 +15,12 @@ import {
   UserButton,
 } from "@clerk/clerk-react";
 import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 function NavbarComponent() {
   const [toggleHeader, setToggleHeader] = useState(true);
+
+  const { totalProduct } = useSelector((state) => state.cartStore);
 
   return (
     <div>
@@ -63,7 +66,7 @@ function NavbarComponent() {
             <div className="flex items-center gap-[5px]">
               <CiShoppingCart size={28} color="white" />
               <span className="bg-mainYellow rounded-full text-whiteColor w-5 h-5  flex items-center justify-center">
-                0
+                {totalProduct}
               </span>
               <span className="text-whiteColor">Cart</span>
             </div>

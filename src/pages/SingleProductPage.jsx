@@ -3,12 +3,17 @@ import { useParams } from "react-router-dom";
 import ProductService from "../services/ProductsService";
 import LoadingComponent from "../components/LoadingComponent";
 import { Rating } from "@mui/material";
+import { useDispatch } from "react-redux";
+import { addToCart } from "../store/cartSlice";
 
 function SingleProductPage() {
   const [singleProduct, setSingleProduct] = useState({});
   const [isLoading, setIsLoading] = useState(false);
   const [currentImage, setCurrentImage] = useState(0);
+
   const { id } = useParams();
+
+  const dispach = useDispatch();
 
   useEffect(() => {
     ProductService.getProductByIdService(id)
@@ -24,7 +29,7 @@ function SingleProductPage() {
       {isLoading ? (
         <div className="container mx-auto flex flex-col lg:flex-row gap-[40px] lg:gap-[20px]">
           {/* Left Side */}
-          <div className="w-[50%]">
+          <div className="w-full lg:w-[50%]">
             <img
               src={singleProduct.images[currentImage]}
               alt={singleProduct.title}
@@ -46,13 +51,27 @@ function SingleProductPage() {
           </div>
 
           {/* Right Side */}
-          <div className="w-[50%]">
-            <h1>{singleProduct.title}</h1>
-            <p>{singleProduct.price}</p>
-            <p>{singleProduct.description}</p>
+          <div className="w-full lg:w-[50%] flex flex-col gap-[10px]">
+            <h1 className="text-[30px] font-bold text-mainBlue">
+              {singleProduct.title}
+            </h1>
+            <p className="text-[20px] font-bold text-mainYellow">
+              {singleProduct.price}
+            </p>
+            <p className="text-[15px] text-textColor">
+              {singleProduct.description}
+            </p>
             <Rating name="read-only" value={singleProduct.rating} readOnly />
+            {singleProduct.stock > 0 ? (
+              <p className="text-[20px] font-bold text-green-500">In Stock</p>
+            ) : (
+              <p className="text-[20px] font-bold text-red-500">Out of Stock</p>
+            )}
             <div className="flex gap-[20px]">
-              <button className="bg-mainYellow text-whiteColor px-[40px] py-[10px] rounded-[15px] my-[15px] hover:bg-mainBlue duration-500 cursor-pointer">
+              <button
+                className="bg-mainYellow text-whiteColor px-[40px] py-[10px] rounded-[15px] my-[15px] hover:bg-mainBlue duration-500 cursor-pointer"
+                onClick={() => dispach(addToCart(singleProduct))}
+              >
                 Add to Cart
               </button>
               <button className="bg-mainBlue text-whiteColor px-[40px] py-[10px] rounded-[15px] my-[15px] hover:bg-mainYellow duration-500 cursor-pointer">
