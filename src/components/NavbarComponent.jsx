@@ -68,7 +68,9 @@ function NavbarComponent() {
               <span className="bg-mainYellow rounded-full text-whiteColor w-5 h-5  flex items-center justify-center">
                 {totalProduct}
               </span>
-              <span className="text-whiteColor">Cart</span>
+              <Link to={"/cart"} className="text-whiteColor">
+                Cart
+              </Link>
             </div>
           </div>
         </div>

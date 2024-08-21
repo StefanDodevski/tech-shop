@@ -9,6 +9,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 //PAGES
 import HomePage from "./pages/HomePage.jsx";
 import SingleProductPage from "./pages/SingleProductPage.jsx";
+import CartPage from "./pages/CartPage.jsx";
 
 //Redux & store
 import { Provider } from "react-redux";
@@ -34,6 +35,10 @@ const router = createBrowserRouter([
       {
         path: "/singleProduct/:id",
         element: <SingleProductPage />,
+      },
+      {
+        path: "/cart",
+        element: <CartPage />,
       },
     ],
   },
