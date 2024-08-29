@@ -5,6 +5,7 @@ const cartSlice = createSlice({
   initialState: {
     cart: [],
     totalProduct: 0,
+    totalPrice: 0,
   },
   reducers: {
     addToCart: (state, action) => {
@@ -26,15 +27,36 @@ const cartSlice = createSlice({
           cartTotal: action.payload.price,
         });
         state.totalProduct++;
-        console.log(state.totalProduct);
+        state.totalPrice += action.payload.price;
       } else {
         copyCart[findIndex].count++;
       }
 
       state.cart = copyCart;
     },
+
+    deleteCartAction: (state, action) => {
+      let copyCart = [...state.cart];
+      console.log(action.payload);
+
+      let findIndex = null;
+
+      copyCart.find((item, index) => {
+        if (item.id === action.payload.id) {
+          findIndex = index;
+          return;
+        }
+      });
+
+      if (findIndex !== null) {
+        copyCart.splice(findIndex, 1);
+        state.totalProduct--;
+        // state.totalPrice
+      }
+      state.cart = copyCart;
+    },
   },
 });
 
-export const { addToCart } = cartSlice.actions;
+export const { addToCart, deleteCartAction } = cartSlice.actions;
 export default cartSlice.reducer;
