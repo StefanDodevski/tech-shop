@@ -5,13 +5,19 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { deleteCartAction } from "../store/cartSlice";
+import { useEffect, useState } from "react";
 
 function CartPage() {
-  let cart = JSON.parse(localStorage.getItem("cart_item"));
-  // const { cart } = useSelector((state) => state.cartStore);
+  const [cartData, setCartData] = useState([]);
+  // let cart = JSON.parse(localStorage.getItem("cart_item"));
+  const { cart } = useSelector((state) => state.cartStore);
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    setCartData(JSON.parse(localStorage.getItem("cart_item")));
+  }, [cart]);
 
   function handleRemoveProduct(product) {
     dispatch(deleteCartAction(product));
@@ -45,7 +51,7 @@ function CartPage() {
               </TableRow>
             </TableHead>
             <TableBody>
-              {cart.map((product) => (
+              {cartData.map((product) => (
                 <TableRow
                   key={product.id}
                   sx={{ "&:last-child td, &:last-child th": { border: 0 } }}

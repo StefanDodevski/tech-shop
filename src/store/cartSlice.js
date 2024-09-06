@@ -53,9 +53,12 @@ const cartSlice = createSlice({
       if (findIndex !== null) {
         copyCart.splice(findIndex, 1);
         state.totalProduct--;
-        // state.totalPrice
+        // state.totalPrice;
       }
       state.cart = copyCart;
+
+      localStorage.setItem("cart_item", JSON.stringify(copyCart));
+      localStorage.setItem("total_product", JSON.stringify(state.totalProduct));
     },
   },
 });
