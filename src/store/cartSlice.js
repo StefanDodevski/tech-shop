@@ -33,6 +33,8 @@ const cartSlice = createSlice({
       }
 
       state.cart = copyCart;
+      localStorage.setItem("cart_item", JSON.stringify(copyCart));
+      localStorage.setItem("total_product", JSON.stringify(state.totalProduct));
     },
 
     deleteCartAction: (state, action) => {

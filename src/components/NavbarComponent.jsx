@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 //Components
 import HeaderComponenet from "./HeaderComponenet";
 import CategoryComponent from "./CategoryComponent";
@@ -14,13 +14,24 @@ import {
   SignInButton,
   UserButton,
 } from "@clerk/clerk-react";
+
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
+// import { useSelector } from "react-redux";
 
 function NavbarComponent() {
   const [toggleHeader, setToggleHeader] = useState(true);
+  const [totalProductLS, setTotalProductLS] = useState(0);
 
+  // let totalProduct = JSON.parse(localStorage.getItem("total_product"));
   const { totalProduct } = useSelector((state) => state.cartStore);
+
+  useEffect(() => {
+    let isTotal = JSON.parse(localStorage.getItem("total_product"));
+    if (isTotal) {
+      setTotalProductLS(isTotal);
+    }
+  }, [totalProduct]);
 
   return (
     <div>
@@ -66,7 +77,7 @@ function NavbarComponent() {
             <div className="flex items-center gap-[5px]">
               <CiShoppingCart size={28} color="white" />
               <span className="bg-mainYellow rounded-full text-whiteColor w-5 h-5  flex items-center justify-center">
-                {totalProduct}
+                {totalProductLS}
               </span>
               <Link to={"/cart"} className="text-whiteColor">
                 Cart

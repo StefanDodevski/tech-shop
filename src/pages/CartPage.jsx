@@ -5,11 +5,12 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { deleteCartAction } from "../store/cartSlice";
 
 function CartPage() {
-  const { cart } = useSelector((state) => state.cartStore);
+  let cart = JSON.parse(localStorage.getItem("cart_item"));
+  // const { cart } = useSelector((state) => state.cartStore);
   const dispatch = useDispatch();
 
   function handleRemoveProduct(product) {

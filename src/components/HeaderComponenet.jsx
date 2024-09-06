@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 // icons
 import { CiLocationOn, CiDeliveryTruck } from "react-icons/ci";
 import { IoMdClose } from "react-icons/io";

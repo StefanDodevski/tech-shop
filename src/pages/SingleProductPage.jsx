@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import ProductService from "../services/ProductsService";
 import LoadingComponent from "../components/LoadingComponent";
 import { Rating } from "@mui/material";
@@ -68,12 +68,13 @@ function SingleProductPage() {
               <p className="text-[20px] font-bold text-red-500">Out of Stock</p>
             )}
             <div className="flex gap-[20px]">
-              <button
+              <Link
+                to={"/cart"}
                 className="bg-mainYellow text-whiteColor px-[40px] py-[10px] rounded-[15px] my-[15px] hover:bg-mainBlue duration-500 cursor-pointer"
                 onClick={() => dispach(addToCart(singleProduct))}
               >
                 Add to Cart
-              </button>
+              </Link>
               <button className="bg-mainBlue text-whiteColor px-[40px] py-[10px] rounded-[15px] my-[15px] hover:bg-mainYellow duration-500 cursor-pointer">
                 Add to Favourites
               </button>
