@@ -27,7 +27,7 @@ const cartSlice = createSlice({
           cartTotal: action.payload.price,
         });
         state.totalProduct++;
-        state.totalPrice += action.payload.price;
+        state.totalPrice += Math.round(action.payload.price);
       } else {
         copyCart[findIndex].count++;
       }
@@ -53,15 +53,39 @@ const cartSlice = createSlice({
       if (findIndex !== null) {
         copyCart.splice(findIndex, 1);
         state.totalProduct--;
-        // state.totalPrice;
+        state.totalPrice = subTotal(copyCart);
       }
       state.cart = copyCart;
 
       localStorage.setItem("cart_item", JSON.stringify(copyCart));
       localStorage.setItem("total_product", JSON.stringify(state.totalProduct));
     },
+
+    setPriceHandlerAction: (state, action) => {
+      const { increment, index } = action.payload;
+      let copyCart = [...state.cart];
+
+      copyCart[index].cartTotal += copyCart[index].price * increment;
+      state.totalPrice = subTotal(copyCart);
+
+      if (copyCart[index].count === 1 && increment === -1) {
+        copyCart.splice(index, 1);
+        state.totalProduct--;
+      } else {
+        copyCart[index].count += increment;
+      }
+
+      state.cart = copyCart;
+      localStorage.setItem("cart_item", JSON.stringify(copyCart));
+      localStorage.setItem("total_product", JSON.stringify(state.totalProduct));
+    },
   },
 });
 
-export const { addToCart, deleteCartAction } = cartSlice.actions;
+function subTotal(arrayCart) {
+  return arrayCart.reduce((acc, current) => acc + current.cartTotal, 0);
+}
+
+export const { addToCart, deleteCartAction, setPriceHandlerAction } =
+  cartSlice.actions;
 export default cartSlice.reducer;

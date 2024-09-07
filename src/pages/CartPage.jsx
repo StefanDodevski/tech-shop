@@ -6,13 +6,13 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import { useDispatch, useSelector } from "react-redux";
-import { deleteCartAction } from "../store/cartSlice";
+import { deleteCartAction, setPriceHandlerAction } from "../store/cartSlice";
 import { useEffect, useState } from "react";
 
 function CartPage() {
   const [cartData, setCartData] = useState([]);
   // let cart = JSON.parse(localStorage.getItem("cart_item"));
-  const { cart } = useSelector((state) => state.cartStore);
+  const { cart, totalPrice } = useSelector((state) => state.cartStore);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -51,7 +51,7 @@ function CartPage() {
               </TableRow>
             </TableHead>
             <TableBody>
-              {cartData.map((product) => (
+              {cartData.map((product, index) => (
                 <TableRow
                   key={product.id}
                   sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
@@ -66,13 +66,27 @@ function CartPage() {
                   <TableCell align="left">${product.price}</TableCell>
                   <TableCell align="left">
                     <div className="flex items-center">
-                      <button className="px-[8px] py-[4px] bg-slate-300 text-[18px]">
+                      <button
+                        className="px-[8px] py-[4px] bg-slate-300 text-[18px]"
+                        onClick={() =>
+                          dispatch(
+                            setPriceHandlerAction({ index, increment: -1 })
+                          )
+                        }
+                      >
                         -
                       </button>
                       <span className="px-[8px] py-[4px] bg-slate-300 text-[18px]">
                         {product.count}
                       </span>
-                      <button className="px-[8px] py-[4px] bg-slate-300 text-[18px]">
+                      <button
+                        className="px-[8px] py-[4px] bg-slate-300 text-[18px]"
+                        onClick={() =>
+                          dispatch(
+                            setPriceHandlerAction({ index, increment: 1 })
+                          )
+                        }
+                      >
                         +
                       </button>
                     </div>
@@ -93,8 +107,9 @@ function CartPage() {
         </TableContainer>
 
         {/* INFO/CART */}
-        <div className="w-full lg:w-[30%]">
+        <div className="w-full lg:w-[30%] ">
           <h2>CART TOTAL</h2>
+          <span>${totalPrice}</span>
         </div>
       </div>
     </div>
