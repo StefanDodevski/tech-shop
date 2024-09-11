@@ -5,6 +5,7 @@ import LoadingComponent from "../components/LoadingComponent";
 import { Rating } from "@mui/material";
 import { useDispatch } from "react-redux";
 import { addToCart } from "../store/cartSlice";
+import { updateFavouriteAction } from "../store/favouriteSlice";
 
 function SingleProductPage() {
   const [singleProduct, setSingleProduct] = useState({});
@@ -75,7 +76,10 @@ function SingleProductPage() {
               >
                 Add to Cart
               </Link>
-              <button className="bg-mainBlue text-whiteColor px-[40px] py-[10px] rounded-[15px] my-[15px] hover:bg-mainYellow duration-500 cursor-pointer">
+              <button
+                className="bg-mainBlue text-whiteColor px-[40px] py-[10px] rounded-[15px] my-[15px] hover:bg-mainYellow duration-500 cursor-pointer"
+                onClick={() => dispach(updateFavouriteAction(singleProduct))}
+              >
                 Add to Favourites
               </button>
             </div>
