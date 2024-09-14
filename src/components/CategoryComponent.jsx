@@ -9,6 +9,7 @@ import { saveAllCategoryAction } from "../store/categorySlice";
 
 //componenets
 import LoadingComponent from "./LoadingComponent";
+import { saveSelectCategoryAction } from "../store/productSlice";
 
 function CategoryComponent() {
   const [toggleCategory, setToggleCategory] = useState(false);
@@ -41,12 +42,19 @@ function CategoryComponent() {
 
         {toggleCategory && (
           <ul className="flex flex-wrap items-center justify-center gap-[5px] w-full">
+            <li
+              className="w-[250px] bg-mainBlue text-whiteColor text-center rounded-[10px] py-[5px] hover:bg-mainYellow cursor-pointer duration-300"
+              onClick={() => dispach(saveSelectCategoryAction(""))}
+            >
+              All Category
+            </li>
             {categoryLoader ? (
               allCategory.map((cat, index) => {
                 return (
                   <li
                     className="w-[250px] bg-mainBlue text-whiteColor text-center rounded-[10px] py-[5px] hover:bg-mainYellow cursor-pointer duration-300"
                     key={index}
+                    onClick={() => dispach(saveSelectCategoryAction(cat))}
                   >
                     {cat}
                   </li>

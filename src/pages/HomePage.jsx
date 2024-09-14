@@ -12,15 +12,30 @@ import CardProductComponent from "../components/CardProductComponent";
 import LoadingComponent from "../components/LoadingComponent";
 
 function HomePage() {
-  const { allProducts, loading } = useSelector((state) => state.productStore);
+  const { allProducts, loading, selectCategory, searchProduct } = useSelector(
+    (state) => state.productStore
+  );
 
   const dispatch = useDispatch();
 
   useEffect(() => {
-    ProductService.getAllProductsService()
+    if (selectCategory) {
+      ProductService.getAllProductsByCategoryService(selectCategory)
+        .then((res) => dispatch(saveAllProductAction(res.data.products)))
+        .catch((err) => console.log(err));
+    } else {
+      ProductService.getAllProductsService()
+        .then((res) => dispatch(saveAllProductAction(res.data.products)))
+        .catch((err) => console.log(err));
+    }
+  }, [selectCategory]);
+
+  useEffect(() => {
+    ProductService.getSearchProductsService(searchProduct)
       .then((res) => dispatch(saveAllProductAction(res.data.products)))
       .catch((err) => console.log(err));
-  }, []);
+  }, [searchProduct]);
+
   return (
     <div className="comntainer mx-auto flex flex-wrap items-center justify-center mt-[50px] gap-[10px]">
       {loading ? (
