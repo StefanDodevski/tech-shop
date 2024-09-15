@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 //services
 import ProductService from "../services/ProductsService";
@@ -12,6 +12,8 @@ import CardProductComponent from "../components/CardProductComponent";
 import LoadingComponent from "../components/LoadingComponent";
 
 function HomePage() {
+  const [limitProducts, setLimitProducts] = useState(10);
+
   const { allProducts, loading, selectCategory, searchProduct } = useSelector(
     (state) => state.productStore
   );
@@ -24,16 +26,18 @@ function HomePage() {
         .then((res) => dispatch(saveAllProductAction(res.data.products)))
         .catch((err) => console.log(err));
     } else {
-      ProductService.getAllProductsService()
+      ProductService.getAllProductsService(limitProducts)
         .then((res) => dispatch(saveAllProductAction(res.data.products)))
         .catch((err) => console.log(err));
     }
-  }, [selectCategory]);
+  }, [selectCategory, limitProducts]);
 
   useEffect(() => {
-    ProductService.getSearchProductsService(searchProduct)
-      .then((res) => dispatch(saveAllProductAction(res.data.products)))
-      .catch((err) => console.log(err));
+    if (searchProduct) {
+      ProductService.getSearchProductsService(searchProduct)
+        .then((res) => dispatch(saveAllProductAction(res.data.products)))
+        .catch((err) => console.log(err));
+    }
   }, [searchProduct]);
 
   return (
@@ -44,6 +48,15 @@ function HomePage() {
         })
       ) : (
         <LoadingComponent size={80} />
+      )}
+
+      {!selectCategory && (
+        <button
+          className="bg-mainBlue text-whiteColor px-[30px] py-[10px] rounded-[15px] my-[15px] hover:bg-mainYellow duration-500 cursor-pointer"
+          onClick={() => setLimitProducts(limitProducts + 10)}
+        >
+          Load More
+        </button>
       )}
     </div>
   );

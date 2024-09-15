@@ -36,7 +36,7 @@ function SingleProductPage() {
               alt={singleProduct.title}
               className="w-full h-[400px] object-contain"
             />
-            <div className="flex items-center justify-center gap-[20px] mt-[15px]">
+            <div className="flex items-center flex-wrap justify-center gap-[20px] mt-[15px]">
               {singleProduct.images.map((el, index) => {
                 return (
                   <img

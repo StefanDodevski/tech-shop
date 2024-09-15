@@ -17,7 +17,7 @@ function CardProductComponent({ product }) {
       <Rating name="read-only" value={product.rating} readOnly />
       <Link
         to={`/singleProduct/${product.id}`}
-        className="bg-mainYellow text-whiteColor px-[30px] py-[10px] rounded-[15px] my-[15px] hover:bg-mainBlue duration-500 cursor-pointer"
+        className="bg-mainBlue text-whiteColor px-[30px] py-[10px] rounded-[15px] my-[15px] hover:bg-mainYellow duration-500 cursor-pointer"
       >
         View More
       </Link>
