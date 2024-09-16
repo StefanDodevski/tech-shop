@@ -7,13 +7,16 @@ import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import { useDispatch, useSelector } from "react-redux";
 import { deleteCartAction, setPriceHandlerAction } from "../store/cartSlice";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 function CartPage() {
   const [cartData, setCartData] = useState([]);
-  // let cart = JSON.parse(localStorage.getItem("cart_item"));
+  const [activeCoupon, setActiveCoupon] = useState("");
+
   const { cart, totalPrice } = useSelector((state) => state.cartStore);
   const dispatch = useDispatch();
+
+  const couponRef = useRef();
 
   useEffect(() => {
     setCartData(JSON.parse(localStorage.getItem("cart_item")));
@@ -21,6 +24,11 @@ function CartPage() {
 
   function handleRemoveProduct(product) {
     dispatch(deleteCartAction(product));
+  }
+
+  function handleApplyCoupon() {
+    setActiveCoupon(couponRef.current.value);
+    couponRef.current.value = "";
   }
 
   return (
@@ -91,7 +99,9 @@ function CartPage() {
                       </button>
                     </div>
                   </TableCell>
-                  <TableCell align="right">${product.cartTotal}</TableCell>
+                  <TableCell align="right">
+                    ${product.cartTotal.toFixed(2)}
+                  </TableCell>
                   <TableCell align="right">
                     <button
                       className="text-red-400"
@@ -108,8 +118,40 @@ function CartPage() {
 
         {/* INFO/CART */}
         <div className="w-full lg:w-[30%] ">
-          <h2>CART TOTAL</h2>
-          <span>${totalPrice}</span>
+          <h2 className="text-white bg-mainBlue text-center py-[17px] rounded-md">
+            CART TOTAL
+          </h2>
+          <span className="text-center text-[28px] font-extrabold">
+            Total price: $
+            {activeCoupon === "stefan"
+              ? totalPrice.toFixed(2) / 2
+              : totalPrice.toFixed(2)}
+          </span>
+
+          <div className="flex flex-col">
+            <input
+              ref={couponRef}
+              // value={activeCoupon}
+              // onChange={(e) => setActiveCoupon(e.target.value)}
+              type="text"
+              placeholder="Insert coupon"
+              className="p-[10px] border border-grayColor rounded-lg placeholder:text-mainBlue outline-none mt-[25px]"
+            />
+            <span className="text-[12px] text-gray-400">
+              Insert coupon for 50% discount
+            </span>
+            <button
+              className={
+                activeCoupon === "stefan"
+                  ? "bg-gray-400 hover:bg-gray-500 text-black px[15px] py-[7px] mt-[30px] rounded-lg cursor-pointer"
+                  : "bg-mainBlue text-whiteColor hover:bg-mainYellow transition-all duration-300 px-[15px] py-[7px] mt-[30px] rounded-lg cursor-pointer"
+              }
+              onClick={handleApplyCoupon}
+              disabled={activeCoupon === "stefan" ? true : false}
+            >
+              {activeCoupon === "stefan" ? "Coupon Applied" : "Apply Coupon"}
+            </button>
+          </div>
         </div>
       </div>
     </div>

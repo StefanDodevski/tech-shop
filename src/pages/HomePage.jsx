@@ -50,7 +50,7 @@ function HomePage() {
         <LoadingComponent size={80} />
       )}
 
-      {!selectCategory && (
+      {!selectCategory && !searchProduct && (
         <button
           className="bg-mainBlue text-whiteColor px-[30px] py-[10px] rounded-[15px] my-[15px] hover:bg-mainYellow duration-500 cursor-pointer"
           onClick={() => setLimitProducts(limitProducts + 10)}
